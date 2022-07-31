@@ -25,8 +25,18 @@ app.use(express.static(UPLOADS_DIR));
  * ########################
  */
 
-const { newUser, validateUser, loginUser, editUser, getUser } = require('./controllers/users/index');
+const { 
+    newUser,
+    validateUser,
+    loginUser,
+    editUser,
+    getUser
+    } = require('./controllers/users/index');
+    
 const authUser = require('./middlewares/authUser');
+
+
+app.get('/users/:idUser', getUser); // -   Ver el perfil de un usuario y su galeria de fotos.
 
 app.post('/users', newUser); // -   Registro. -   Extra: Validación por email.
 
@@ -48,11 +58,8 @@ const {
     likeEntry,
     listEntries,
 } = require('./controllers/entries');
-const selectEntryByIdEntryQuery = require('./db/entriesQueries/selectEntriesByIdUserQuery');
-
 
 app.post('/entries',authUser, newEntry); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**
-
 
 app.get('/entries', listEntries); //  -   Ver ultimas fotos (entries) publicadas por otros usuarios. // -   Buscar fotos por texto descriptivo.
 

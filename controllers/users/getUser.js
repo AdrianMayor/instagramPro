@@ -1,5 +1,5 @@
 const selectUserByIdQuery = require("../../db/userQueries/selectUserByIdQuery");
-const selectEntryByIdUserQuery = require("../../db/entriesQueries/selectEntryByIdUserQuery");
+const selectPhotosByIdUserQuery = require("../../db/entriesQueries/selectPhotosByIdUserQuery");
 
 const getUser = async (req,res,next) => {
 
@@ -11,8 +11,9 @@ const getUser = async (req,res,next) => {
         const user = await selectUserByIdQuery(idUser);
 
         // regogemos todas las fotos del usuario
-        const photos = await selectEntryByIdUserQuery(idUser);
+        let photos = await selectPhotosByIdUserQuery(idUser);
 
+        if(!photos) photos = 'Photos not found'
         res.send({
             status: 'ok',
             data: {

@@ -20,7 +20,10 @@ const selectAllEntriesQuery = async (idUser, keyword = '') => {
                     BIT_OR(L.idUser = ? AND L.value = 1) AS likedByMe,
                     P.id AS imageId, 
                     P.name AS imageName, 
-                    P.createdAt AS imageAddingDate 
+                    P.createdAt AS imageAddingDate, 
+                    C.comment,
+                    C.idUser AS commentUser,
+                    C.createdAt
                 FROM entries E
                 LEFT JOIN users U ON E.idUser = U.id
                 LEFT JOIN likes L ON L.idEntry = E.id
@@ -28,7 +31,9 @@ const selectAllEntriesQuery = async (idUser, keyword = '') => {
                 LEFT JOIN comments C ON C.idEntry = E.id
                 WHERE E.description LIKE ?
                 GROUP BY E.id
-                ORDER BY E.createdAt DESC
+                ORDER BY E.createdAt DESC;
+                
+
             `,
             [idUser, idUser, `%${keyword}%`]
         );
