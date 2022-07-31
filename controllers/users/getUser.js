@@ -1,5 +1,5 @@
 const selectUserByIdQuery = require("../../db/userQueries/selectUserByIdQuery");
-const selectEntryByIdUserQuery = require("../../db/entryQueries/selectEntryByIdUserQuery");
+const selectEntryByIdUserQuery = require("../../db/entriesQueries/selectEntryByIdUserQuery");
 
 const getUser = async (req,res,next) => {
 
