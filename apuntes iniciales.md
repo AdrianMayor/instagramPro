@@ -13,7 +13,7 @@
 -   morgan
 -   sharp
 -   uuid
-<!-- - joi -->
+<!-- -   joi -->
 
 ### Dependencias de Desarrollo
 
@@ -47,6 +47,7 @@
     -   FOREIGN KEY (idUser) REFERENCES users(id),
     -   idPhoto INT UNSIGNED NOT NULL,
     -   FOREIGN KEY (idPhoto) REFERENCES photos(id),
+    -   edited BOOLEAN DEFAULT false,
     -   Location VARCHAR (100),
     -   createdAt TIMESTAMP NOT NULL,
     -   modifiedAt TIMESTAMP
@@ -92,10 +93,10 @@
 
 #### Endpoints Fotos
 
--   Publicar una foto (con resize) con una descripcion (con autenticación y usuario activo).
--   Buscar fotos por texto descriptivo.
--   Dar / Quitar like a una foto (con autenticación y usuario activo).
--   Comentar una foto (con autenticación y usuario activo).
+-   Publicar una foto (con resize) con una descripcion (con autenticación y usuario activo). ✅
+-   Buscar fotos por texto descriptivo.✅
+-   Dar / Quitar like a una foto (con autenticación y usuario activo).✅
+-   Comentar una foto (con autenticación y usuario activo).✅
 
 &nbsp;
 
@@ -118,6 +119,13 @@
 
 <!-- ## Sistema de grupos de interes / Categorias -->
 
+### Sistema de paginacion
+
+-   Paginacion en comentarios
+-   Paginacion en el feed de posts
+
+https://www.sqlshack.com/pagination-in-sql-server/
+
 ### Endpoints Usuarios
 
 -   Edicion de contraseña con validacion por email.(con autenticacion y usuario activo.)
@@ -129,3 +137,7 @@
 ### Endpoint fotos
 
 -   Subir más de una foto. Límite de ~ 4. (con autenticación y usuario activo)
+
+### Validacion con joi
+
+### Añadir emotes

@@ -47,6 +47,7 @@ async function main() {
                 description VARCHAR(250),
                 idUser INT UNSIGNED NOT NULL,
                 FOREIGN KEY (idUser) REFERENCES users(id),
+                edited BOOLEAN DEFAULT false,
                 Location VARCHAR (100),
                 createdAt TIMESTAMP NOT NULL,
                 modifiedAt TIMESTAMP
