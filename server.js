@@ -25,27 +25,33 @@ app.use(express.static(UPLOADS_DIR));
  * ########################
  */
 
-app.get('/users/:idUser'); // -   Ver el perfil de un usuario y su galeria de fotos.
+const { newUser, validateUser, loginUser, editUser, getUser } = require('./controllers/users/index');
+const authUser = require('./middlewares/authUser');
 
-app.entry('/users'); // -   Registro. -   Extra: Validación por email.
 
-app.entry('/users/login'); // -   Login
+app.get('/users/:idUser', getUser); // -   Ver el perfil de un usuario y su galeria de fotos.
 
-app.put('/users'); // -  Editar usuario **TOKEN && ACTIVE**
+app.post('/users', newUser); // -   Registro. -   Extra: Validación por email.
+
+app.put('/users/validate/:registrationCode', validateUser);   // validar un usuario
+
+app.post('/users/login', loginUser); // -   Login
+
+app.put('/users', authUser, editUser); // -  Editar usuario **TOKEN && ACTIVE**
 
 /**
- * #####################
+ * #######################
  * ## Endpoints entries ##
- * #####################
+ * #######################
  */
 app.get('/home'); //  -   Ver ultimas fotos (entries) publicadas por otros usuarios.
 
-app.entry('/entries'); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**
+app.post('/entries'); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**
 
 app.get('/entries'); // -   Buscar fotos por texto descriptivo.
 
-app.entry('/entries/:idEntries/like'); // -   Dar / Quitar like a una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
-app.entry('/entries/:idEntries/comment'); // -   Comentar una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
+app.post('/entries/:idEntries/like'); // -   Dar / Quitar like a una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
+app.post('/entries/:idEntries/comment'); // -   Comentar una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
 
 /**
  * ######################
