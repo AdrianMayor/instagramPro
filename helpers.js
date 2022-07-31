@@ -130,4 +130,35 @@ module.exports = {
     verifyEmail,
     savePhoto,
     deletePhoto,
+ /*
+ * ################
+ * ## Save Photo ##
+ * ################
+ */
+
+const savePhoto = async (photo) => {
+    const uploadsPath = path.join(__dirname, process.env.UPLOADS_DIR);
+
+    try {
+        await fs.access(uploadsPath);
+    } catch {
+        await fs.mkdir(uploadsPath);
+    }
+
+    const sharpPhoto = sharp(photo.data);
+
+    sharpPhoto.resize(300);
+
+    const photoName = `${uuid()}.jpg`;
+
+    const photoPath = path.join(uploadsPath, photoName);
+
+    await sharpPhoto.toFile(photoPath);
+
+    return photoName;
+};
+
+module.exports = {
+    generateError,
+    savePhoto,
 };
