@@ -64,6 +64,37 @@ CREATE TABLE IF NOT EXISTS users (
        modifiedAt TIMESTAMP
        );
        
+INSERT INTO comments (idEntry, idUser, comment, createdAt)
+VALUES 	('1', '2', 'cremisima','2022-07-30 18:00:00'),
+		('2', '2', 'Aguita papá', '2022-07-29 16:34:54'),
+		('1','3','Pa la proxima te invito','2022-07-30 18:10:00'),
+		('1','1','Orden en la sala','2022-07-30 18:20:00');
+        
+INSERT INTO likes (idUser, idEntry, createdAt)
+VALUES 	('2', '1','2022-07-30 17:59:00');
+		
+                            
+       
+       SELECT E.*, 
+       U.username,
+       SUM(IFNULL(L.value = true, 0)) AS likes,
+       E.idUser = 3 AS owner,
+       BIT_OR(L.idUser = 3 AND L.value = 1) AS likedByMe
+       FROM entries E
+       LEFT JOIN users U ON E.idUser = U.id
+       LEFT JOIN likes L ON L.idEntry = E.id;
+       
+	   SELECT E.*,U.*, P.*, C.*, L.*
+       FROM entries E
+       LEFT JOIN photos P ON P.idEntry = E.id
+       LEFT JOIN comments C ON C.idEntry = E.id
+       LEFT JOIN likes L ON L.idEntry = E.id
+	   LEFT JOIN users U ON E.idUser = U.id;
+       
+       
+       
+
+       
        
        
        
