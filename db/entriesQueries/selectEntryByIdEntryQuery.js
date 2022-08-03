@@ -2,7 +2,7 @@ const getConnection = require('../getConnection');
 
 const { generateError } = require('../../helpers');
 
-const selectEntryByIdQuery = async (idEntry, idUser) => {
+const selectEntryByIdEntryQuery = async (idEntry, idUser) => {
     let connection;
     try {
         connection = await getConnection();
@@ -10,14 +10,19 @@ const selectEntryByIdQuery = async (idEntry, idUser) => {
         const [entry] = await connection.query(
             `
                 SELECT 
-                    E.*, 
-                    U.username,
-                    SUM(IFNULL(L.value = true, 0)) AS likes,
-                    E.idUser = ? AS owner,
-                    BIT_OR(L.idUser = ? AND L.value = 1) AS likedByMe
+                    E.id,
+                    E.description AS entryDescription,
+                    E.idUser AS entryOwnerId,
+                    U.username AS entryOwnerUsername,
+                    E.idUser = ? AS EntryOwner,
+                    BIT_OR(L.idUser = ? AND L.value = 1) AS likedByMe,
+                    COUNT(C.id) AS totalComments,
+                    SUM(IFNULL(L.value = true, 0)) AS totalLikes,
+                    E.createdAt AS entryCreationDate
                 FROM entries E
                 LEFT JOIN users U ON E.idUser = U.id
                 LEFT JOIN likes L ON L.idEntry = E.id
+                LEFT JOIN comments C ON C.idEntry = E.id
                 WHERE E.id = ?
                 GROUP BY E.id;
             `,
@@ -49,4 +54,4 @@ const selectEntryByIdQuery = async (idEntry, idUser) => {
     }
 };
 
-module.exports = selectEntryByIdQuery;
+module.exports = selectEntryByIdEntryQuery;

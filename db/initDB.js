@@ -28,9 +28,6 @@ async function main() {
                 email VARCHAR(100) UNIQUE NOT NULL,
                 password VARCHAR(100) NOT NULL,
                 avatar VARCHAR(100),
-                birthday DATE,
-                Location VARCHAR(100),
-                biography VARCHAR (250),
                 role ENUM('admin', 'normal') DEFAULT 'normal',
                 registrationCode VARCHAR(100),
                 active BOOLEAN DEFAULT false,
@@ -47,10 +44,7 @@ async function main() {
                 description VARCHAR(250),
                 idUser INT UNSIGNED NOT NULL,
                 FOREIGN KEY (idUser) REFERENCES users(id),
-                edited BOOLEAN DEFAULT false,
-                Location VARCHAR (100),
-                createdAt TIMESTAMP NOT NULL,
-                modifiedAt TIMESTAMP
+                createdAt TIMESTAMP NOT NULL
                 )
             `
         );

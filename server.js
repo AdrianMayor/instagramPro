@@ -25,27 +25,25 @@ app.use(express.static(UPLOADS_DIR));
  * ########################
  */
 
-const { 
+const {
     newUser,
     validateUser,
     loginUser,
     editUser,
-    getUser
-    } = require('./controllers/users/index');
-    
-const authUser = require('./middlewares/authUser');
+    getUser,
+} = require('./controllers/users/index');
 
+const authUser = require('./middlewares/authUser');
 
 app.get('/users/:idUser', getUser); // -   Ver el perfil de un usuario y su galeria de fotos.
 
 app.post('/users', newUser); // -   Registro. -   Extra: Validación por email.
 
-app.put('/users/validate/:registrationCode', validateUser);   // validar un usuario
+app.put('/users/validate/:registrationCode', validateUser); // validar un usuario
 
 app.post('/users/login', loginUser); // -   Login
 
 app.put('/users', authUser, editUser); // -  Editar usuario **TOKEN && ACTIVE**
-
 
 /**
  * #######################
@@ -57,16 +55,21 @@ const {
     insertCommentToEntry,
     likeEntry,
     listEntries,
+    viewEntryComments,
+    getSingleEntry,
 } = require('./controllers/entries');
 
-app.post('/entries',authUser, newEntry); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**
+app.post('/entries', authUser, newEntry); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**
 
 app.get('/entries', listEntries); //  -   Ver ultimas fotos (entries) publicadas por otros usuarios. // -   Buscar fotos por texto descriptivo.
 
-app.post('/entries/:idEntry/like',authUser, likeEntry); // -   Dar / Quitar like a una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
+app.get('/entries/:idEntry', getSingleEntry); // Obtener datos de una entrada en particular
 
-app.post('/entries/:idEntry/comment',authUser, insertCommentToEntry); // -   Comentar una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
+app.get('/entries/:idEntry/comment', viewEntryComments); // Ver los comentarios de una foto
 
+app.post('/entries/:idEntry/comment', authUser, insertCommentToEntry); // -   Comentar una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
+
+app.post('/entries/:idEntry/like', authUser, likeEntry); // -   Dar / Quitar like a una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
 
 /**
  * ######################
