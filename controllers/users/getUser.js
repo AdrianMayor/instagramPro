@@ -12,6 +12,7 @@ const getUser = async (req, res, next) => {
         let photos = await selectPhotosByIdUserQuery(idUser);
 
         if (photos.length < 1) photos = 'Photos not found';
+
         res.send({
             status: 'ok',
             data: {

@@ -11,6 +11,7 @@ const selectPhotosByIdUserQuery = async (idUser) => {
             SELECT P.name, E.id
             FROM photos P
             LEFT JOIN entries E ON P.idEntry = E.id
+
             LEFT JOIN users U On E.idUser = U.id
             Where u.id = ?
             `,
