@@ -40,7 +40,7 @@ app.get('/users/:idUser', getUser); // -   Ver el perfil de un usuario y su gale
 
 app.post('/users', newUser); // -   Registro. -   Extra: Validación por email.
 
-app.put('/users/validate/:registrationCode', validateUser);   // validar un usuario
+app.get('/users/validate/:registrationCode', validateUser);   // validar un usuario
 
 app.post('/users/login', loginUser); // -   Login
 

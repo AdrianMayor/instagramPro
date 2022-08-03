@@ -45,8 +45,6 @@
     -   description VARCHAR(250),
     -   idUser INT UNSIGNED NOT NULL,
     -   FOREIGN KEY (idUser) REFERENCES users(id),
-    -   idPhoto INT UNSIGNED NOT NULL,
-    -   FOREIGN KEY (idPhoto) REFERENCES photos(id),
     -   edited BOOLEAN DEFAULT false,
     -   Location VARCHAR (100),
     -   createdAt TIMESTAMP NOT NULL,
@@ -84,12 +82,12 @@
 
 #### Endpoints Usuarios
 
--   Ver ultimas fotos publicadas por otros usuarios.
--   Ver el perfil de un usuario y su galeria de fotos.
--   Registro.
-    -   Extra: Validación por email.
--   Login.
--   Editar usuario (con autenticación y usuario activo).
+-   Ver ultimas fotos publicadas por otros usuarios.✅
+-   Ver el perfil de un usuario y su galeria de fotos.✅
+-   Registro.✅
+    -   Extra: Validación por email.✅
+-   Login.✅
+-   Editar usuario (con autenticación y usuario activo).✅
 
 #### Endpoints Fotos
 

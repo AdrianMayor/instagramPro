@@ -13,7 +13,7 @@ const getUser = async (req,res,next) => {
         // regogemos todas las fotos del usuario
         let photos = await selectPhotosByIdUserQuery(idUser);
 
-        if(!photos) photos = 'Photos not found'
+        if(photos.length < 1) photos = 'Photos not found';
         res.send({
             status: 'ok',
             data: {

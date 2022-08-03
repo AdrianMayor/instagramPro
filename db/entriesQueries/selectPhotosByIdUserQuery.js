@@ -13,14 +13,10 @@ const selectPhotosByIdUserQuery = async (idUser) => {
             SELECT P.name
             from photos P
             LEFT JOIN entries E ON P.idEntry = E.id
-            LEFT JOIN users U On E.idUser = U.id
-            Where u.id = ?
+            LEFT JOIN users U ON E.idUser = U.id
+            Where U.id = ?
             `, [idUser]
         );
-
-        if (entries.length < 1) {
-            throw generateError('No entry found', 404);
-        }
 
         return entries;
     } finally {
