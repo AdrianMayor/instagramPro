@@ -19,7 +19,6 @@ const newUserSchema = joi.object().keys({
         )
         .required()
         .error((errors) => {
-            console.log(errors[0].code);
             switch(errors[0].code){
                 case 'any.required':
                     return new Error ('Password is required')
