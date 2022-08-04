@@ -20,6 +20,17 @@ const generateError = (message, status) => {
 };
 
 /**
+ * #####################
+ * ## VALIDATE SCHEMA ##
+ * #####################
+ */
+
+const validateSchema = async (schema, data) => {
+    const validation = schema.validate(data);
+    if(validation.error) throw generateError(validation.error.message, 400);
+}
+
+/**
  * ##################
  * ## VERIFY EMAIL ##
  * ##################
@@ -52,7 +63,7 @@ const verifyEmail = async (email, registrationCode) => {
         // Enviamos el mensaje
         await sgMail.send(msg);
     } catch {
-        throw generateError('Hubo un problema al enviar el email');
+        throw generateError('Error sending email');
     }
 };
 
@@ -147,7 +158,7 @@ const deletePhoto = async (imgName) => {
 
         return true;
     } catch {
-        throw generateError('Error al eliminar la imagen del srvidor');
+        throw generateError('Error to delete image from server');
     }
 };
 
@@ -157,4 +168,5 @@ module.exports = {
     savePhoto,
     deletePhoto,
     indexPagination,
+    validateSchema,
 };

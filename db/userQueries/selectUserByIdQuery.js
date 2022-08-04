@@ -4,19 +4,18 @@ const { generateError } = require('../../helpers');
 
 const selectUserByIdQuery = async (idUser)  => {
     let connection;
-
     try {
         connection = await getConnection();
 
         // Seleccionamos los datos del usuario en relacion a su id
         const [users] = await connection.query(
-            `SELECT id, username, email, role, createdAt, active, birthday, Location , biography, avatar FROM users WHERE id = ?`,
+            `SELECT id, username, email, role, createdAt, active, avatar FROM users WHERE id = ?`,
             [idUser]
         );
 
         // Si no existe usuario lanzamos un error
         if (users.length < 1) {
-            throw generateError('Usuario no encontrado', 404);   
+            throw generateError('User not found', 404);   
         }
         
         // devolvemos el usuario

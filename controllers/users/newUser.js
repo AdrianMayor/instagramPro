@@ -1,6 +1,8 @@
-const { generateError, verifyEmail } = require("../../helpers");
+const { verifyEmail, validateSchema } = require("../../helpers");
 const insertUserQuery = require("../../db/userQueries/insertUserQuery");
 const { v4: uuid } = require('uuid');
+const newUserSchema = require ('../../schemas/newUserSchema')
+
 
 const newUser = async (req, res, next) => {
 
@@ -8,7 +10,8 @@ const newUser = async (req, res, next) => {
         
         const { username, password, email} = req.body;
         
-        if(!username || !password || !email) throw generateError ('faltan campos', 400);
+        // Validamos los datos del body con joi
+        await validateSchema(newUserSchema, req.body)
 
         // Generamos un código de registro
         const registrationCode = uuid();
@@ -21,7 +24,7 @@ const newUser = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Usuario creado',
+            message: 'User created',
         });
 
     } catch (err) {

@@ -31,16 +31,19 @@ const {
     loginUser,
     editUser,
     getUser,
+    getOwnUser,
 } = require('./controllers/users/index');
 
 const authUser = require('./middlewares/authUser');
+const authUserOptional = require('./middlewares/authUserOptional');
 
 app.get('/users/:idUser', getUser); // -   Ver el perfil de un usuario y su galeria de fotos.
 
 app.post('/users', newUser); // -   Registro. -   Extra: Validación por email.
 
-
 app.get('/users/validate/:registrationCode', validateUser);   // validar un usuario
+
+app.get('/users', authUserOptional, getOwnUser) // Devuelve los datos del usuario logeado y sus fotos
 
 app.post('/users/login', loginUser); // -   Login
 

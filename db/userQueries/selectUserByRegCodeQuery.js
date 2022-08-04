@@ -17,7 +17,7 @@ const selectUserByRegCodeQuery = async (registrationCode) => {
             );
             
             // Si no existe el usuario lanzamos un error
-            if (users.length < 1) throw generateError('Usuario no encontrado', 404)
+            if (users.length < 1) throw generateError('User not found', 404)
 
            // Devolvemos el usuario
             return users[0];

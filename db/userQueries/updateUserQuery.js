@@ -9,8 +9,8 @@ const updateUserQuery = async (username, email, avatar, birthday, Location, biog
 
         // Actualizamos el usuario.
         await connection.query(
-            'UPDATE users SET username = ?, email = ?, avatar = ?, birthday = ?, location = ? , biography = ? WHERE id = ?',
-            [username, email, avatar, birthday, Location, biography, idUser]
+            'UPDATE users SET username = ?, email = ?, avatar = ? WHERE id = ?',
+            [username, email, avatar, idUser]
         )
     } finally {
         if(connection) connection.release();
