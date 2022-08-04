@@ -18,6 +18,7 @@ const listEntries = async (req, res, next) => {
 
         const startIndex = (page - 1) * limit;
 
+        
         // Listamos todas las entries pasando como argumentos la pagina, los datos a recibir por pagina y en caso de tenerlo la keyword y el id del usuario.
         const entries = await selectAllEntriesQuery(
             req.user?.id,

@@ -31,19 +31,26 @@ const {
     loginUser,
     editUser,
     getUser,
+    getOwnUser,
 } = require('./controllers/users/index');
 
 const authUser = require('./middlewares/authUser');
+const authUserOptional = require('./middlewares/authUserOptional');
 
 app.get('/users/:idUser', getUser); // -   Ver el perfil de un usuario y su galeria de fotos.
 
 app.post('/users', newUser); // -   Registro. -   Extra: Validación por email.
 
+
 app.get('/users/validate/:registrationCode', validateUser); // validar un usuario
+
+
+app.get('/users', authUserOptional, getOwnUser) // Devuelve los datos del usuario logeado y sus fotos
 
 app.post('/users/login', loginUser); // -   Login
 
 app.put('/users', authUser, editUser); // -  Editar usuario **TOKEN && ACTIVE**
+
 
 /**
  * #######################
@@ -51,6 +58,7 @@ app.put('/users', authUser, editUser); // -  Editar usuario **TOKEN && ACTIVE**
  * #######################
  */
 const {
+    getOwnPhotos,
     newEntry,
     insertCommentToEntry,
     likeEntry,
@@ -59,13 +67,17 @@ const {
     getSingleEntry,
 } = require('./controllers/entries');
 
+app.get('/entries/users',authUser, getOwnPhotos);
+
 app.post('/entries', authUser, newEntry); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**
 
-app.get('/entries', listEntries); //  -   Ver ultimas fotos (entries) publicadas por otros usuarios. // -   Buscar fotos por texto descriptivo.
+app.get('/entries',authUserOptional, listEntries); //  -   Ver ultimas fotos (entries) publicadas por otros usuarios. // -   Buscar fotos por texto descriptivo.
 
-app.get('/entries/:idEntry', getSingleEntry); // Obtener datos de una entrada en particular
+app.get('/entries/:idEntry',authUserOptional, getSingleEntry); // Obtener datos de una entrada en particular
 
-app.get('/entries/:idEntry/comment', viewEntryComments); // Ver los comentarios de una entrada
+
+app.get('/entries/:idEntry/comment', authUserOptional ,viewEntryComments); // Ver los comentarios de una entrada
+
 
 app.post('/entries/:idEntry/comment', authUser, insertCommentToEntry); // -   Comentar una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
 

@@ -1,23 +1,26 @@
 const getConnection = require('../getConnection');
 
-const selectPhotosByIdUserQuery = async (idUser) => {
+const selectPhotosByIdUserQuery = async (idUser, startIndex, limit) => {
     let connection;
 
     try {
         connection = await getConnection();
 
-        const [entries] = await connection.query(
+        const [photos] = await connection.query(
             `
-            SELECT P.name, E.id
+            SELECT P.name, E.id AS entryId
             FROM photos P
             LEFT JOIN entries E ON P.idEntry = E.id
             LEFT JOIN users U On E.idUser = U.id
             Where u.id = ?
+            GROUP BY P.id
+            ORDER BY E.createdAt DESC
+            LIMIT ?,?;
             `,
-            [idUser]
+            [idUser, startIndex, limit]
         );
 
-        return entries;
+        return photos;
     } finally {
         if (connection) connection.release();
     }

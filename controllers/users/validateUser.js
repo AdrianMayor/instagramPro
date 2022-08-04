@@ -15,7 +15,7 @@ const validateUser = async (req, res, next) => {
 
         res.send ({
             status: 'ok',
-            message: 'Usuario activado',
+            message: 'Activated user',
         });
 
     } catch (err) {
