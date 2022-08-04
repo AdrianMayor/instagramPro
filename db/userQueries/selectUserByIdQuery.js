@@ -9,7 +9,7 @@ const selectUserByIdQuery = async (idUser)  => {
 
         // Seleccionamos los datos del usuario en relacion a su id
         const [users] = await connection.query(
-            `SELECT id, username, email, role, createdAt, active, avatar FROM users WHERE id = ?`,
+            `SELECT id, username, role, createdAt, active, avatar FROM users WHERE id = ?`,
             [idUser]
         );
 
