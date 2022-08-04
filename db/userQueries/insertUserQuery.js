@@ -23,7 +23,7 @@ const insertUserQuery = async (username, password, email, registrationCode) => {
         );
 
         // Si existe algun usuario con ese email o con ese nombre de usuario lanzamos un error
-        if (emailUsers.length > 0 || usernameUsers.length > 0) throw generateError('Ya existe un usuario con ese email o nombre de usuario en la base de datos',403);
+        if (emailUsers.length > 0 || usernameUsers.length > 0) throw generateError('A user with that name already exists',403);
 
         // Encriptamos la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);

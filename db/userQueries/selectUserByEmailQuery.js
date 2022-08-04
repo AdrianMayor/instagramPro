@@ -16,7 +16,7 @@ const selectUserByEmailQuery = async (email)  => {
 
         // Si no existe el usuario lanzamos un error
         if (users.length < 1) {
-            throw generateError('Email incorrecto', 404);   
+            throw generateError('Wrong email', 404);   
         }
         
         // devolvemos el usuario

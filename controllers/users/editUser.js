@@ -1,16 +1,15 @@
-const { generateError, savePhoto, deletePhoto } = require("../../helpers");
+const { validateSchema, savePhoto, deletePhoto } = require("../../helpers");
 const selectUserByIdQuery = require('../../db/userQueries/selectUserByIdQuery')
 const updateUserQuery = require('../../db/userQueries/updateUserQuery');
+const editUserSchema = require('../../schemas/editUserSchema');
 
 const editUser = async (req, res, next) => {
     try {
         // Obtenemos los campos del body.
-        let { username, email, birthday, Location, biography } = req.body;
+        let { username, email } = req.body;
 
-        // Si falta todos  los campos damos un error
-        if (!username && !email && !birthday && !Location && !biography && !req.files?.avatar) {
-            throw generateError('Faltan campos', 400);
-        }
+        // Validamos los datos del body con joi
+        await validateSchema(editUserSchema, req.body)
 
         // obtenemos la info del usuario
         const user = await selectUserByIdQuery(req.user.id);
@@ -34,16 +33,13 @@ const editUser = async (req, res, next) => {
         username = username || user.username;
         email = email || user.email;
         avatar = avatar || user.avatar;
-        birthday = birthday || user.birthday;
-        Location = Location || user.Location;
-        biography = biography || user.biography;
 
         // Actualizamos los datos del usuario
-        await updateUserQuery(username, email, avatar, birthday, Location, biography, req.user.id);
+        await updateUserQuery(username, email, avatar, req.user.id);
 
         res.send({
             status: 'ok',
-            message: 'Usuario actualizado',
+            message: 'Usuario updated',
         });
     } catch (err) {
         next(err);
