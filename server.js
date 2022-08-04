@@ -39,8 +39,7 @@ app.get('/users/:idUser', getUser); // -   Ver el perfil de un usuario y su gale
 
 app.post('/users', newUser); // -   Registro. -   Extra: Validación por email.
 
-
-app.get('/users/validate/:registrationCode', validateUser);   // validar un usuario
+app.get('/users/validate/:registrationCode', validateUser); // validar un usuario
 
 app.post('/users/login', loginUser); // -   Login
 
@@ -66,7 +65,7 @@ app.get('/entries', listEntries); //  -   Ver ultimas fotos (entries) publicadas
 
 app.get('/entries/:idEntry', getSingleEntry); // Obtener datos de una entrada en particular
 
-app.get('/entries/:idEntry/comment', viewEntryComments); // Ver los comentarios de una foto
+app.get('/entries/:idEntry/comment', viewEntryComments); // Ver los comentarios de una entrada
 
 app.post('/entries/:idEntry/comment', authUser, insertCommentToEntry); // -   Comentar una foto (con autenticación y usuario activo). **TOKEN && ACTIVE**
 
