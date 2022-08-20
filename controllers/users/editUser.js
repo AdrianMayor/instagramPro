@@ -17,9 +17,11 @@ const editUser = async (req, res, next) => {
         // Variable donde almacenamos el nombre de la imagen
         let avatar;
 
+        
         // Si existe avatar
         if(req.files?.avatar) {
 
+            console.log(req.files.avatar);
             // Si el usuario tiene un avatar asignado lo borramos del dico duro
             if (user.avatar){
                 await deletePhoto(user.avatar);
