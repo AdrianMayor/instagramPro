@@ -10,8 +10,6 @@ async function main() {
     try {
         connection = await getConnection();
 
-        connection = await getConnection();
-
         await connection.query(`DROP TABLE IF EXISTS likes`);
         await connection.query(`DROP TABLE IF EXISTS comments`);
         await connection.query(`DROP TABLE IF EXISTS photos`);
