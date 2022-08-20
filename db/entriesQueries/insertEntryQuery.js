@@ -8,8 +8,8 @@ const insertEntryQuery = async (description, location, idUser) => {
 
         // Insertamos los datos del post en la BBDD
         const [newEntry] = await connection.query(
-            `INSERT INTO entries (description, idUser, location, createdAt) VALUES (?, ?, ?, ?)`,
-            [description, idUser, location, new Date()]
+            `INSERT INTO entries (description, idUser, createdAt) VALUES (?, ?, ?, ?)`,
+            [description, idUser, new Date()]
         );
 
         // Retornamos la id de la entrada

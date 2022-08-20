@@ -10,7 +10,7 @@ const selectPhotosByIdUserQuery = async (idUser) => {
 
         const [entries] = await connection.query(
             `
-            SELECT P.name
+            SELECT P.name, E.id
             from photos P
             LEFT JOIN entries E ON P.idEntry = E.id
             LEFT JOIN users U On E.idUser = U.id
@@ -18,9 +18,7 @@ const selectPhotosByIdUserQuery = async (idUser) => {
             `, [idUser]
         );
 
-        if (entries.length < 1) {
-            throw generateError('No entry found', 404);
-        }
+        
 
         return entries;
     } finally {

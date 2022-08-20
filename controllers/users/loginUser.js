@@ -8,7 +8,7 @@ const loginUser = async (req, res, next) => {
         const { email, password } = req.body;
 
         if(!email || !password) {
-            throw generateError('Faltan campos', 400);
+            throw generateError('Email or password not found', 400);
         }
 
         // Obtenemos al susuario con el email que viene en el body.
@@ -19,11 +19,11 @@ const loginUser = async (req, res, next) => {
         
          // Si las contraseñas no coinciden lanzamos un error
         if(!validPassword) {
-            throw generateError('Contraseña incorrecta', 401);
+            throw generateError('Incorrect password', 401);
         }
 
         // Si el usuario no está activo lanzamos un error.
-        if(!user.active) throw generateError('El usuario no esta activado',401);
+        if(!user.active) throw generateError('The user must be activated',401);
        
         // Generamos un objeto con la informacion que queremos agregar al token. 
         const payload = {

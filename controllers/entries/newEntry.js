@@ -6,7 +6,7 @@ const newEntry = async (req, res, next) => {
     try {
         console.log(req.user.id);
         // Recojemos los datos que nos llegan desde body
-        const { description, location } = req.body;
+        const { description } = req.body;
 
         // Comprobamos que la foto nos llega desde el body
         if (!req.files)
@@ -18,7 +18,6 @@ const newEntry = async (req, res, next) => {
         //Introducimos el post en la BBDD
         const entryId = await insertEntryQuery(
             description,
-            location,
             req.user.id
         );
 
