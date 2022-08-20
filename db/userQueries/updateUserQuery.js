@@ -1,6 +1,6 @@
 const getConnection = require('../getConnection');
 
-const updateUserQuery = async (username, email, avatar, birthday, Location, biography, idUser) => {
+const updateUserQuery = async (username, email, avatar, idUser) => {
 
     let connection;
 
