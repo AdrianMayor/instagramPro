@@ -1,7 +1,8 @@
 const joi = require('joi');
 
 const newUserSchema = joi.object().keys({
-    username: joi.string()
+    username: joi
+    .string()
     .min(5)
     .max(25),
     email: joi
