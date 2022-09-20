@@ -64,6 +64,7 @@ const {
     getSingleEntry,
 } = require('./controllers/entries');
 
+
 app.get('/entries/users', authUser, getOwnPhotos);
 
 app.post('/entries', authUser, newEntry); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**

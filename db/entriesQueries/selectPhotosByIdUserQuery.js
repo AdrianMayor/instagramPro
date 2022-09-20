@@ -1,6 +1,6 @@
 const getConnection = require('../getConnection');
 
-const selectPhotosByIdUserQuery = async (idUser, startIndex, limit) => {
+const selectPhotosByIdUserQuery = async (idUser) => {
     let connection;
 
     try {
@@ -15,9 +15,8 @@ const selectPhotosByIdUserQuery = async (idUser, startIndex, limit) => {
             Where U.id = ?
             GROUP BY P.id
             ORDER BY E.createdAt DESC
-            LIMIT ?,?;
             `,
-            [idUser, startIndex, limit]
+            [idUser]
         );
 
         return photos;
