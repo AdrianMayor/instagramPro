@@ -4,7 +4,6 @@ const likeEntry = require('./likeEntry');
 const listEntries = require('./listEntries');
 const newEntry = require('./newEntry');
 const viewEntryComments = require('./viewEntryComments');
-const getOwnPhotos = require('./getOwnPhotos');
 
 module.exports = {
     newEntry,
@@ -13,5 +12,4 @@ module.exports = {
     listEntries,
     viewEntryComments,
     getSingleEntry,
-    getOwnPhotos,
 };

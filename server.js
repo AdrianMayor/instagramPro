@@ -30,20 +30,23 @@ const {
     validateUser,
     loginUser,
     editUser,
+    getUserProfile,
+    getOwnProfile,
     getUser,
-    getOwnUser,
 } = require('./controllers/users/index');
 
 const authUser = require('./middlewares/authUser');
 const authUserOptional = require('./middlewares/authUserOptional');
 
-app.get('/users/:idUser', getUser); // -   Ver el perfil de un usuario y su galeria de fotos.
+app.get('/users/:idUser', authUserOptional, getUserProfile); // -   Ver el perfil de un usuario y su galeria de fotos.
+
+app.get('/users/profile/:idUser', authUserOptional, getUser); // - Devuelve los datos principales de un usuario
 
 app.post('/users', newUser); // -   Registro. -   Extra: Validación por email.
 
 app.get('/users/validate/:registrationCode', validateUser); //-  validar un usuario
 
-app.get('/users', authUserOptional, getOwnUser); //-     Devuelve los datos del usuario logeado y sus fotos
+app.get('/users', authUser, getOwnProfile); //-     Devuelve los datos del usuario logeado y sus fotos
 
 app.post('/users/login', loginUser); // -   Login
 
@@ -55,7 +58,6 @@ app.put('/users', authUser, editUser); // -  Editar usuario **TOKEN && ACTIVE**
  * #######################
  */
 const {
-    getOwnPhotos,
     newEntry,
     insertCommentToEntry,
     likeEntry,
@@ -63,9 +65,6 @@ const {
     viewEntryComments,
     getSingleEntry,
 } = require('./controllers/entries');
-
-
-app.get('/entries/users', authUser, getOwnPhotos);
 
 app.post('/entries', authUser, newEntry); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**
 
