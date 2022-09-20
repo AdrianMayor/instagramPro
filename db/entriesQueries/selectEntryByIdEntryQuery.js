@@ -1,5 +1,4 @@
 const getConnection = require('../getConnection');
-
 const { generateError } = require('../../helpers');
 
 const selectEntryByIdEntryQuery = async (idEntry, idUser) => {
@@ -31,24 +30,7 @@ const selectEntryByIdEntryQuery = async (idEntry, idUser) => {
 
         if (entry.length < 1) throw generateError('No entry found', 404);
 
-        const [photos] = await connection.query(
-            `
-                SELECT 
-                    id AS imageId, 
-                    name AS imageName, 
-                    createdAt AS imageAddingDate 
-                FROM photos 
-                WHERE idEntry = ?;
-            `,
-            [idEntry]
-        );
-
-        const fullEntry = {
-            ...entry[0],
-            photos,
-        };
-
-        return fullEntry;
+        return entry;
     } finally {
         if (connection) connection.release();
     }

@@ -1,5 +1,5 @@
-const { validateSchema, savePhoto, deletePhoto } = require("../../helpers");
-const selectUserByIdQuery = require('../../db/userQueries/selectUserByIdQuery')
+const { validateSchema, savePhoto, deletePhoto } = require('../../helpers');
+const selectUserByIdQuery = require('../../db/userQueries/selectUserByIdQuery');
 const updateUserQuery = require('../../db/userQueries/updateUserQuery');
 const editUserSchema = require('../../schemas/editUserSchema');
 
@@ -9,7 +9,9 @@ const editUser = async (req, res, next) => {
         let { username, email } = req.body;
  
         // Validamos los datos del body con joi
-        //await validateSchema(editUserSchema, req.body)
+
+        await validateSchema(editUserSchema, req.body);
+
 
         // obtenemos la info del usuario
         const user = await selectUserByIdQuery(req.user.id);
@@ -19,15 +21,14 @@ const editUser = async (req, res, next) => {
         console.log(user);
        
         // Si existe avatar
-        if(req.files?.avatar) {
-
+        if (req.files?.avatar) {
             // Si el usuario tiene un avatar asignado lo borramos del dico duro
-            if (user.avatar){
+            if (user.avatar) {
                 await deletePhoto(user.avatar);
             }
-            
+
             // Guardamos la imagejn en el disco duro y obtenemos el nombre
-            avatar = await savePhoto(req.files.avatar); 
+            avatar = await savePhoto(req.files.avatar);
         }
         // Establecemos el valor final para las variables.
         username = username || user.username;

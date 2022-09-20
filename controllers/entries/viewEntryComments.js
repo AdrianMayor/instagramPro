@@ -1,4 +1,5 @@
-const selectAllCommentsByIdEntry = require('../../db/entriesQueries/selectFirstsCommentsByIdEntry');
+const selectCommentsByIdEntry = require('../../db/entriesQueries/selectCommentsByIdEntry');
+const totalResultsQuery = require('../../db/entriesQueries/totalResultsQuery');
 const { indexPagination, generateError } = require('../../helpers');
 
 const viewEntryComments = async (req, res, next) => {
@@ -15,16 +16,24 @@ const viewEntryComments = async (req, res, next) => {
 
         const startIndex = (page - 1) * limit;
 
-        const entryComments = await selectAllCommentsByIdEntry(
+        const entryComments = await selectCommentsByIdEntry(
             idEntry,
             req.user?.id,
             startIndex,
             limit
         );
 
-        if (entryComments.length < 1) throw generateError('No comments', 400);
+        const totalResults = await totalResultsQuery({
+            option: 'viewEntryComments',
+            idEntry,
+        });
 
-        const index = indexPagination(entryComments, startIndex, page, limit);
+        const index = await indexPagination(
+            totalResults.totalResults,
+            startIndex,
+            page,
+            limit
+        );
 
         res.send({
             status: 'ok',
@@ -33,8 +42,6 @@ const viewEntryComments = async (req, res, next) => {
                 entryComments,
             },
         });
-
-        if (!page) page = 1;
     } catch (err) {
         next(err);
     }

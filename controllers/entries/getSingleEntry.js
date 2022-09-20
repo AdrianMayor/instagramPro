@@ -1,4 +1,5 @@
 const selectEntryByIdEntryQuery = require('../../db/entriesQueries/selectEntryByIdEntryQuery');
+const selectPhotosByIdEntryQuery = require('../../db/entriesQueries/selectPhotosByIdEntryQuery');
 const { generateError } = require('../../helpers');
 
 const getSingleEntry = async (req, res, next) => {
@@ -9,10 +10,17 @@ const getSingleEntry = async (req, res, next) => {
 
         if (entry.length < 1) throw generateError('No entry found', 404);
 
+        const photos = await selectPhotosByIdEntryQuery(idEntry);
+
+        const fullEntry = {
+            ...entry,
+            photos,
+        };
+
         res.send({
             status: 'ok',
             data: {
-                entry,
+                fullEntry,
             },
         });
     } catch (err) {
