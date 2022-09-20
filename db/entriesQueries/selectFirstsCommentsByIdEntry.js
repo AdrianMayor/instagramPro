@@ -1,6 +1,11 @@
 const getConnection = require('../getConnection');
 
-const selectFirstsCommentsByIdEntry = async (idEntry, idUser) => {
+const selectFirstsCommentsByIdEntry = async (
+    idEntry,
+    idUser,
+    startIndex,
+    limit
+) => {
     let connection;
     try {
         connection = await getConnection();
@@ -17,10 +22,11 @@ const selectFirstsCommentsByIdEntry = async (idEntry, idUser) => {
             FROM comments C 
             LEFT JOIN users U ON U.id = C.idUser 
             WHERE idEntry = ?
-            ORDER BY C.createdAt DESC;
+            ORDER BY C.createdAt DESC
+            LIMIT ?,?;
 
         `,
-            [idUser, idEntry]
+            [idUser, idEntry, startIndex, limit]
         );
 
         return comments;

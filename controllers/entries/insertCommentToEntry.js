@@ -13,6 +13,7 @@ const insertCommentToEntry = async (req, res, next) => {
         const schema = joi.object().keys({
             comment: joi.string().max(250).required(),
         });
+
         const validation = schema.validate(req.body);
         if (validation.error)
             throw generateError(validation.error.message, 400);

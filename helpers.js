@@ -27,8 +27,8 @@ const generateError = (message, status) => {
 
 const validateSchema = async (schema, data) => {
     const validation = schema.validate(data);
-    if(validation.error) throw generateError(validation.error.message, 400);
-}
+    if (validation.error) throw generateError(validation.error.message, 400);
+};
 
 /**
  * ##################
@@ -73,23 +73,40 @@ const verifyEmail = async (email, registrationCode) => {
  * ######################
  */
 
-const indexPagination = async (array, startIndex, page, limit) => {
-    const index = {};
+const indexPagination = async (totalResults, startIndex, page, limit) => {
+    let index = { totalResults };
+    let message;
+
+    const lastPage = Math.ceil(totalResults / limit);
+
+    if (page > lastPage || page < 0) return (message = 'No Results');
 
     if (startIndex > 0) {
-        index.previous = {
-            page: page - 1,
+        index = {
+            ...index,
+            previousPage: page - 1,
+        };
+    }
+
+    index = {
+        ...index,
+        currentPage: page,
+    };
+
+    if (page !== lastPage) {
+        index = {
+            ...index,
+            nextPage: page + 1,
+            lastPage: lastPage,
             limit: limit,
         };
     }
 
-    if (
-        !array.find((item) => {
-            return item.id === 1;
-        })
-    ) {
-        index.next = {
-            page: page + 1,
+    if (lastPage === page) {
+        index = {
+            ...index,
+            nextPage: 'none',
+            lastPage: lastPage,
             limit: limit,
         };
     }

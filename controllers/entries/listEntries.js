@@ -2,6 +2,7 @@ const selectAllEntriesQuery = require('../../db/entriesQueries/selectAllEntriesQ
 const selectPhotosByIdEntryQuery = require('../../db/entriesQueries/selectPhotosByIdEntryQuery');
 const selectFirstsCommentsByIdEntry = require('../../db/entriesQueries/selectFirstsCommentsByIdEntry');
 const { indexPagination } = require('../../helpers');
+const totalResultsQuery = require('../../db/entriesQueries/totalResultsQuery');
 
 const listEntries = async (req, res, next) => {
     try {
@@ -16,9 +17,8 @@ const listEntries = async (req, res, next) => {
         if (!page) page = 1;
         if (!limit) limit = 10;
 
-        const startIndex = (page - 1) * limit;
+        let startIndex = (page - 1) * limit;
 
-        
         // Listamos todas las entries pasando como argumentos la pagina, los datos a recibir por pagina y en caso de tenerlo la keyword y el id del usuario.
         const entries = await selectAllEntriesQuery(
             req.user?.id,
@@ -27,8 +27,19 @@ const listEntries = async (req, res, next) => {
             keyword
         );
 
+        // Obtenemos el total de entradas
+        const totalResults = await totalResultsQuery({
+            option: 'listEntries',
+            keyword,
+        });
+
         // Montamos el indice de navegacion
-        const index = await indexPagination(entries, startIndex, page, limit);
+        const index = await indexPagination(
+            totalResults.totalResults,
+            startIndex,
+            page,
+            limit
+        );
 
         // Añadimos a las entradas los nombres de las fotos que tenga cada una
         await Promise.all(
@@ -43,7 +54,9 @@ const listEntries = async (req, res, next) => {
             entries.map(async (entry) => {
                 const comments = await selectFirstsCommentsByIdEntry(
                     entry.id,
-                    req.user?.id
+                    req.user?.id,
+                    (startIndex = 0),
+                    (limit = 3)
                 );
                 entry.comments = comments;
             })
