@@ -44,7 +44,7 @@ const listEntries = async (req, res, next) => {
         // Añadimos a las entradas los nombres de las fotos que tenga cada una
         await Promise.all(
             entries.map(async (entry) => {
-                const photos = await selectPhotosByIdEntryQuery(entry.id);
+                const photos = await selectPhotosByIdEntryQuery(entry.entryId);
                 entry.photos = photos;
             })
         );
@@ -53,7 +53,7 @@ const listEntries = async (req, res, next) => {
         await Promise.all(
             entries.map(async (entry) => {
                 const comments = await selectFirstsCommentsByIdEntry(
-                    entry.id,
+                    entry.entryId,
                     req.user?.id,
                     (startIndex = 0),
                     (limit = 3)
