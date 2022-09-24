@@ -2,6 +2,7 @@ const insertEntryQuery = require('../../db/entriesQueries/insertEntryQuery');
 const { generateError, savePhoto } = require('../../helpers');
 const insertPhotoQuery = require('../../db/entriesQueries/insertPhotoQuery');
 const joi = require('joi');
+const selectUserByIdQuery = require('../../db/userQueries/selectUserByIdQuery');
 
 const newEntry = async (req, res, next) => {
     try {
@@ -10,6 +11,9 @@ const newEntry = async (req, res, next) => {
 
         //Introducimos el post en la BBDD
         const entryId = await insertEntryQuery(description, req.user?.id);
+
+        // Obtenemos el username
+        const user = await selectUserByIdQuery(req.user?.id);
 
         // Validamos que la descripcion es correcta
         const schema = joi.object().keys({
@@ -48,6 +52,7 @@ const newEntry = async (req, res, next) => {
                 entry: {
                     entryId: entryId,
                     entryDescription: description,
+                    entryOwnerUsername: user.username,
                     photos,
                     totalComments: 0,
                     totalLikes: 0,
