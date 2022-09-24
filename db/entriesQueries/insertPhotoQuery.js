@@ -7,12 +7,14 @@ const insertPhotoQuery = async (photoName, idEntry) => {
         connection = await getConnection();
 
         // Insertamos datos de la foto en la BBDD
-        await connection.query(
+        const data = await connection.query(
             `
                 INSERT INTO photos (name, idEntry, createdAt) VALUES (?, ?, ?)
             `,
             [photoName, idEntry, new Date()]
         );
+
+        return data;
     } finally {
         if (connection) connection.release();
     }

@@ -32,11 +32,13 @@ const newEntry = async (req, res, next) => {
             //Guardamos la foto
             let photoName = await savePhoto(photo);
 
-            // Pusheamos la foto al array de fotos
-            photos.push(photoName);
-
             //Guardamos el nombre de la foto en BBDD
-            await insertPhotoQuery(photoName, entryId);
+            const photoInfo = await insertPhotoQuery(photoName, entryId);
+
+            photos.push({
+                imageId: photoInfo[0].insertId,
+                imageName: photoName,
+            });
         }
 
         res.send({
@@ -44,11 +46,14 @@ const newEntry = async (req, res, next) => {
             message: 'Post created!',
             data: {
                 entry: {
-                    id: entryId,
-                    description,
+                    entryId: entryId,
+                    entryDescription: description,
                     photos,
-                    idUser: req.user.id,
-                    createdAt: new Date(),
+                    totalComments: 0,
+                    totalLikes: 0,
+                    entryOwnerId: req.user.id,
+                    entryCreationDate: new Date(),
+                    comments: [],
                 },
             },
         });
