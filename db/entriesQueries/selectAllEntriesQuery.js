@@ -31,9 +31,8 @@ const selectAllEntriesQuery = async (
                 LEFT JOIN users U ON E.idUser = U.id
                 LEFT JOIN likes L ON L.idEntry = E.id
                 LEFT JOIN comments C ON C.idEntry = E.id
-
                 GROUP BY E.id
-                ORDER BY E.createdAt DESC
+                ORDER BY E.id DESC
                 LIMIT ?,?;
             `,
                   [idUser, idUser, startIndex, limit]
@@ -56,7 +55,7 @@ const selectAllEntriesQuery = async (
                 LEFT JOIN comments C ON C.idEntry = E.id
                 WHERE E.description LIKE ?
                 GROUP BY E.id
-                ORDER BY E.createdAt DESC
+                ORDER BY E.id DESC
                 LIMIT ?,?;
             `,
                   [idUser, idUser, `%${keyword}%`, startIndex, limit]
