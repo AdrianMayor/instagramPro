@@ -9,7 +9,7 @@ const selectEntryByIdEntryQuery = async (idEntry, idUser) => {
         const [entry] = await connection.query(
             `
                 SELECT 
-                    E.id,
+                    E.id AS entryId,
                     E.description AS entryDescription,
                     E.idUser AS entryOwnerId,
                     U.username AS entryOwnerUsername,
