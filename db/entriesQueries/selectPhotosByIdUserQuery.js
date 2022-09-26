@@ -14,7 +14,7 @@ const selectPhotosByIdUserQuery = async (idUser, startIndex, limit) => {
             LEFT JOIN users U On E.idUser = U.id
             Where U.id = ?
             GROUP BY P.id
-            ORDER BY E.createdAt DESC
+            ORDER BY P.id DESC
             LIMIT ?,?
             `,
             [idUser, startIndex, limit]
