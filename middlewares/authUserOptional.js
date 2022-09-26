@@ -7,13 +7,14 @@ const authUserOptional = async (req, res, next) => {
         // Obtenemos el token de la cabecera.
         const { authorization } = req.headers;
 
+        console.log(authorization);
+
         // Si hay token....
         if (authorization) {
             // Variable que contendrá la información del token
             let payload;
 
             try {
-                
                 payload = jwt.verify(authorization, process.env.SECRET);
             } catch {
                 throw generateError('Incorrect token', 401);
@@ -23,7 +24,6 @@ const authUserOptional = async (req, res, next) => {
             req.user = payload;
         }
 
-        
         next();
     } catch (err) {
         next(err);
