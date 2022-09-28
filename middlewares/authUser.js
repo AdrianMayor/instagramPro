@@ -8,7 +8,6 @@ const authUser = async (req, res, next) => {
     try {
         // Obetenemos el token de la cabecera.
         const { authorization } = req.headers;
-
         // Si no hay token lanzamos un error.
 
         if (!authorization) {

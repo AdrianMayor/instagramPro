@@ -68,7 +68,7 @@ const {
 
 app.post('/entries', authUser, newEntry); // -   Publicar una foto (con resize) con una descripcion **TOKEN && ACTIVE**
 
-app.get('/entries', listEntries); //  -   Ver ultimas fotos (entries) publicadas por otros usuarios. // -   Buscar fotos por texto descriptivo.
+app.get('/entries', authUserOptional, listEntries); //  -   Ver ultimas fotos (entries) publicadas por otros usuarios. // -   Buscar fotos por texto descriptivo.
 
 app.get('/entries/:idEntry', authUserOptional, getSingleEntry); // Obtener datos de una entrada en particular
 
