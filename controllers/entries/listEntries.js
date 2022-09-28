@@ -8,7 +8,7 @@ const listEntries = async (req, res, next) => {
     try {
         // Recogemos la keyword
         const { keyword } = req.query;
-
+        console.log(req.user);
         // Recogemos la pagina por la que se hara la query
         let page = parseInt(req.query.page);
         let limit = parseInt(req.query.limit);

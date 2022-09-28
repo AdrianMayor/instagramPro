@@ -7,8 +7,6 @@ const authUserOptional = async (req, res, next) => {
         // Obtenemos el token de la cabecera.
         const { authorization } = req.headers;
 
-        console.log(authorization);
-
         // Si hay token....
         if (authorization) {
             // Variable que contendrá la información del token

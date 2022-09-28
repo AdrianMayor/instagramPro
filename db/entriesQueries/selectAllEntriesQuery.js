@@ -6,8 +6,6 @@ const selectAllEntriesQuery = async (
     limit,
     keyword = ''
 ) => {
-    // Otorgamos un valor por defecto al parámetro 'keyword' en caso de que no recibamos ningun argumento.
-
     let connection;
     try {
         connection = await getConnection();
